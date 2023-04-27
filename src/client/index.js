@@ -4,7 +4,7 @@ import { startCapturingInput, stopCapturingInput } from './input.js';
 import { downloadAssets } from './assets.js';
 import { initState } from './state.js';
 
-import './css/main.css';
+import './main.css';
 
 const startMenu = document.getElementById('startmenu');
 const playButton = document.getElementById('playbutton');
@@ -13,14 +13,13 @@ const usernameInput = document.getElementById('usernameinput');
 Promise.all([
     connect(),
     downloadAssets(),
-  ]).then(() => {
+]).then(() => {
     usernameInput.focus();
     playButton.onclick = () => {
-      // Play!
-      play(usernameInput.value);
-      startMenu.style.display = "none";
-      initState();
-      startCapturingInput();
-      startRendering();
+        play(usernameInput.value);
+        startMenu.style.display = "none";
+        initState();
+        startCapturingInput();
+        startRendering();
     };
-  });
+});

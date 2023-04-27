@@ -39,7 +39,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/client/html/index.html',
+      template: 'src/client/index.html',
     }),
   ],
 };
