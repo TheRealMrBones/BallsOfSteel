@@ -6,7 +6,7 @@ class Game {
         this.players = {};
         this.lastUpdateTime = Date.now();
         this.shouldSendUpdate = false;
-        setInterval(this.update.bind(this), 1000 / 60);
+        setInterval(this.update.bind(this), 1000 / Constants.UPDATE_RATE);
     }
 
     addPlayer(socket, username) {
@@ -17,9 +17,12 @@ class Game {
         delete this.players[socket.id];
     }
 
-    handleInput(socket, dir) {
+    handleInput(socket, inputs) {
+        const { dir, x, y } = inputs;
         if (this.players[socket.id]) {
             this.players[socket.id].setDirection(dir);
+            this.players[socket.id].updateX(x);
+            this.players[socket.id].updateY(y);
         }
     }
 

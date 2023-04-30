@@ -9,6 +9,14 @@ class Object {
     setDirection(dir){
         this.dir = dir;
     }
+
+    updateX(x){
+        this.x += x;
+    }
+
+    updateY(y){
+        this.y += y;
+    }
   
     distanceTo(object) {
         const dx = this.x - object.x;
