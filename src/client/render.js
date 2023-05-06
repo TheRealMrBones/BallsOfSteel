@@ -36,8 +36,8 @@ function renderBG(me){
         getAsset('tiles.png'),
         -canvas.width / 2 - me.x % (canvas.height / 9) - (canvas.height / 9),
         -canvas.height / 2 - me.y % (canvas.height / 9) - (canvas.height / 9),
-        18 * canvas.height / 9,
-        canvas.height / 9 * 11,
+        canvas.height / 9 * 24,
+        canvas.height / 9 * 13,
     );
     context.restore();
 }
@@ -51,10 +51,10 @@ function renderPlayer(me, player){
     context.rotate(dir);
     context.drawImage(
         getAsset('bluePlayer.png'),
-        -PLAYER_SCALE / 2 * getAsset('bluePlayer.png').width,
-        -PLAYER_SCALE * getAsset('bluePlayer.png').height + PLAYER_SCALE / 2 * getAsset('bluePlayer.png').width,
-        getAsset('bluePlayer.png').width * PLAYER_SCALE,
-        getAsset('bluePlayer.png').height * PLAYER_SCALE,
+        -canvas.height / PLAYER_SCALE / 2,
+        -canvas.height / PLAYER_SCALE * getAsset('bluePlayer.png').height / getAsset('bluePlayer.png').width + canvas.height / PLAYER_SCALE / 2,
+        canvas.height / PLAYER_SCALE,
+        canvas.height / PLAYER_SCALE * getAsset('bluePlayer.png').height / getAsset('bluePlayer.png').width,
     );
     context.restore();
 }

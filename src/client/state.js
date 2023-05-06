@@ -93,7 +93,7 @@ function interpolateDirection(d1, d2, ratio) {
     if (d1 > d2) {
       return d1 + (d2 + 2 * Math.PI - d1) * ratio;
     } else {
-      return d1 - (d2 - 2 * Math.PI - d1) * ratio;
+      return d1 + (d2 - 2 * Math.PI - d1) * ratio;
     }
   } else {
     // Normal interp

@@ -24,69 +24,83 @@ function handleDirection(x, y) {
 }
 
 function handlekeyDown(e){
-    if(e.keyCode == 87){
-        // w
-        startw = Date.now();
-    }else if(e.keyCode == 83){
-        // s
-        starts = Date.now();
-    }else if(e.keyCode == 65){
-        // a
-        starta = Date.now();
-    }else if(e.keyCode == 68){
-        // d
-        startd = Date.now();
+    console.log(e.key);
+    switch(e.key){
+        case 'w':
+            if(startw == null){
+                startw = Date.now();
+            }
+            break;
+        case 's':
+            if(starts == null){
+                starts = Date.now();
+            }
+            break;
+        case 'a':
+            if(starta == null){
+                starta = Date.now();
+            }
+            break;
+        case 'd':
+            if(startd == null){
+                startd = Date.now();
+            }
+            break;
     }
 }
 
 function handlekeyUp(e){
-    if(e.keyCode == 87){
-        // w
-        y = -(startw - Date.now()) / 1000 * Constants.PLAYER_SPEED;
-        startw = null;
-    }else if(e.keyCode == 83){
-        // s
-        y = (starts - Date.now()) / 1000 * Constants.PLAYER_SPEED;
-        starts = null;
-    }else if(e.keyCode == 65){
-        // a
-        x = -(starta - Date.now()) / 1000 * Constants.PLAYER_SPEED;
-        starta = null;
-    }else if(e.keyCode == 68){
-        // d
-        x = (startd - Date.now()) / 1000 * Constants.PLAYER_SPEED;
-        startd = null;
+    switch(e.key){
+        case 'w':
+            if(startw != null){
+                y -= (Date.now() - startw) * Constants.PLAYER_SPEED / 1000;
+                startw = null;
+            }
+            break;
+        case 's':
+            if(starts != null){
+                y += (Date.now() - starts) * Constants.PLAYER_SPEED / 1000;
+                starts = null;
+            }
+            break;
+        case 'a':
+            if(starta != null){
+                x -= (Date.now() - starta) * Constants.PLAYER_SPEED / 1000;
+                starta = null;
+            }
+            break;
+        case 'd':
+            if(startd != null){
+                x += (Date.now() - startd) * Constants.PLAYER_SPEED / 1000;
+                startd = null;
+            }
+            break;
     }
 }
 
 function handleInput(){
     if(startw != null){
-        // w
-        y = (startw - Date.now()) / 1000 * Constants.PLAYER_SPEED;
+        y -= (Date.now() - startw) * Constants.PLAYER_SPEED / 1000;
         startw = Date.now();
     }
     if(starts != null){
-        // s
-        y = -(starts - Date.now()) / 1000 * Constants.PLAYER_SPEED;
+        y += (Date.now() - starts) * Constants.PLAYER_SPEED / 1000;
         starts = Date.now();
     }
     if(starta != null){
-        // a
-        x = (starta - Date.now()) / 1000 * Constants.PLAYER_SPEED;
+        x -= (Date.now() - starta) * Constants.PLAYER_SPEED / 1000;
         starta = Date.now();
     }
     if(startd != null){
-        // d
-        x = -(startd - Date.now()) / 1000 * Constants.PLAYER_SPEED;
+        x += (Date.now() - startd) * Constants.PLAYER_SPEED / 1000;
         startd = Date.now();
     }
 
-    let inputs = {
+    updateInputs({
         dir: dir,
         x: x,
         y: y,
-    };
-    updateInputs(inputs);
+    });
     x = 0;
     y = 0;
 }

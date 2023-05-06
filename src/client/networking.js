@@ -25,6 +25,5 @@ export const play = username => {
 };
   
 export const updateInputs = throttle(20, inputs => {
-    console.log(inputs);
     socket.emit(Constants.MSG_TYPES.INPUT, inputs);
 });
