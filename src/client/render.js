@@ -37,7 +37,7 @@ function renderBG(me){
     context.translate(canvasX, canvasY);
     context.drawImage(
         getAsset('tiles.png'),
-        -canvas.width / 2 - fixCoord(me.x) % (canvas.height / 9) - (canvas.height / 9) + (canvas.width / 2) % (canvas.height / 9),
+        -canvas.width / 2 - fixCoord(me.x) % (canvas.height / 9) - (canvas.height / 9) * 2 + (canvas.width / 2) % (canvas.height / 9),
         -canvas.height / 2 - fixCoord(me.y) % (canvas.height / 9) - (canvas.height / 9),
         canvas.height / 9 * 24,
         canvas.height / 9 * 13,

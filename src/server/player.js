@@ -5,6 +5,7 @@ class Player extends ObjectClass {
         super(id, x, y, dir);
         this.socket = socket;
         this.username = username;
+        this.dead = false;
     }
 
     serializeForUpdate() {

@@ -9,6 +9,7 @@ let startw = null;
 let starta = null;
 let starts = null;
 let startd = null;
+let interval = null;
 
 function onMouseInput(e) {
     handleDirection(e.clientX, e.clientY);
@@ -117,7 +118,7 @@ export function startCapturingInput() {
     window.addEventListener('keyup', handlekeyUp);
     window.addEventListener('mousedown', handleMouseDown);
 
-    setInterval(handleInput, 1000 / Constants.UPDATE_RATE);
+    interval = setInterval(handleInput, 1000 / Constants.UPDATE_RATE);
 }
   
 export function stopCapturingInput() {
@@ -128,6 +129,14 @@ export function stopCapturingInput() {
     window.removeEventListener('keydown', handlekeyDown);
     window.removeEventListener('keyup', handlekeyUp);
     window.removeEventListener('mousedown', handleMouseDown);
+    
+    dir = 0;
+    x = 0;
+    y = 0;
+    startw = null;
+    starta = null;
+    starts = null;
+    startd = null;
 
-    clearInterval(handleInput)
+    clearInterval(interval)
 }

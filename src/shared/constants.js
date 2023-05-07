@@ -5,6 +5,7 @@ module.exports = Object.freeze({
 
     BULLET_SCALE: 59,
     BULLET_SPEED: 3000,
+    BULLET_TTL: 2000,
 
     UPDATE_RATE: 60,
 

@@ -14,7 +14,7 @@ const connectedPromise = new Promise(resolve => {
 });
 
 export const connect = onGameOver => (
-    connectedPromise.then(() => {3
+    connectedPromise.then(() => {
         socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
         socket.on(Constants.MSG_TYPES.DEAD, onGameOver);
     })

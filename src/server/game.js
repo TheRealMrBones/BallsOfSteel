@@ -1,6 +1,7 @@
 const Constants = require('../shared/constants.js');
 const Player = require('./player.js');
 const Bullet = require('./bullet.js');
+const applyBulletCollisions = require('./collisions');
 
 class Game {
     constructor() {
@@ -37,10 +38,23 @@ class Game {
         const dt = (now - this.lastUpdateTime) / 1000;
         this.lastUpdateTime = now;
         
+        const removeBullets = [];
+        this.bullets.forEach(bullet => {
+            if (bullet.update(dt)){
+                removeBullets.push(bullet);
+            }
+        });
+        removeBullets.push(...applyBulletCollisions(Object.values(this.players), this.bullets));
+        this.bullets = this.bullets.filter(b => !removeBullets.includes(b));
+
+        Object.values(this.players).forEach(p => {
+            if(p.dead){
+                p.socket.emit(Constants.MSG_TYPES.DEAD);
+                this.removePlayer(p.socket);
+            }
+        })
+
         if (this.shouldSendUpdate) {
-            this.bullets.forEach(bullet => {
-                bullet.updatePos(dt);
-            });
             Object.values(this.players).forEach(player => {
                 player.socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(player));
             });

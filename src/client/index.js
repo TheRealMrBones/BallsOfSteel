@@ -11,7 +11,7 @@ const playButton = document.getElementById('playbutton');
 const usernameInput = document.getElementById('usernameinput');
 
 Promise.all([
-    connect(),
+    connect(onGameOver),
     downloadAssets(),
 ]).then(() => {
     usernameInput.focus();
@@ -22,4 +22,10 @@ Promise.all([
         startCapturingInput();
         startRendering();
     };
-});
+}).catch(console.error);
+
+function onGameOver() {
+    stopCapturingInput();
+    stopRendering();
+    startMenu.style.display = "block";
+}
