@@ -1,6 +1,7 @@
 const ASSET_NAMES = [
     'bluePlayer.png',
     'tiles.png',
+    'bullet.png',
 ];
   
 const assets = {};

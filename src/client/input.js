@@ -1,4 +1,4 @@
-import { updateInputs } from './networking.js';
+import { updateInputs, shoot } from './networking.js';
 
 const Constants = require('../shared/constants.js');
 
@@ -24,7 +24,6 @@ function handleDirection(x, y) {
 }
 
 function handlekeyDown(e){
-    console.log(e.key);
     switch(e.key){
         case 'w':
             if(startw == null){
@@ -78,6 +77,10 @@ function handlekeyUp(e){
     }
 }
 
+function handleMouseDown(){
+    shoot();
+}
+
 function handleInput(){
     if(startw != null){
         y -= (Date.now() - startw) * Constants.PLAYER_SPEED / 1000;
@@ -112,6 +115,7 @@ export function startCapturingInput() {
     window.addEventListener('touchmove', onTouchInput);
     window.addEventListener('keydown', handlekeyDown);
     window.addEventListener('keyup', handlekeyUp);
+    window.addEventListener('mousedown', handleMouseDown);
 
     setInterval(handleInput, 1000 / Constants.UPDATE_RATE);
 }
@@ -123,6 +127,7 @@ export function stopCapturingInput() {
     window.removeEventListener('touchmove', onTouchInput);
     window.removeEventListener('keydown', handlekeyDown);
     window.removeEventListener('keyup', handlekeyUp);
+    window.removeEventListener('mousedown', handleMouseDown);
 
     clearInterval(handleInput)
 }
