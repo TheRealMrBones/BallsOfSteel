@@ -8,7 +8,7 @@ function applyBulletCollisions(players, bullets) {
             const player = players[j];
             if (
                 bullet.pid !== player.id &&
-                player.distanceTo(bullet) <= Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE + Constants.NATIVE_RESOLUTION / Constants.BULLET_SCALE
+                player.distanceTo(bullet) <= (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE + Constants.NATIVE_RESOLUTION / Constants.BULLET_SCALE) / 2
             ) {
                 removeBullets.push(bullet);
                 player.dead = true;
