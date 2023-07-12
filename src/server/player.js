@@ -8,6 +8,11 @@ class Player extends ObjectClass {
         this.dead = false;
     }
 
+    move(x, y){
+        this.x = x;
+        this.y = y;
+    }
+
     serializeForUpdate() {
         return {
         ...(super.serializeForUpdate()),

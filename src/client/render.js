@@ -13,18 +13,23 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
+let Me = null;
+
 function render() {
     if(getCurrentState() == null){
         animationFrameRequestId = requestAnimationFrame(render);
         return;
     }
-    const { me, others, bullets } = getCurrentState();
+    const { me, others, bullets, blocks } = getCurrentState();
 
     if (me) {
+        Me = me;
         renderBG(me);
-        renderPlayer(me, me);
         bullets.forEach(renderBullet.bind(null, me));
         others.forEach(renderPlayer.bind(null, me));
+        blockVision();
+        blocks.forEach(b => { renderBlock(b); });
+        renderPlayer(me, me);
     }
 
     animationFrameRequestId = requestAnimationFrame(render);
@@ -76,6 +81,46 @@ function renderBullet(me, bullet){
         canvas.height / BULLET_SCALE,
         canvas.height / BULLET_SCALE,
     );
+    context.restore();
+}
+
+function renderBlock(block) {
+    let first;
+    let last;
+    block.forEach(p => {
+        if (first == null) {
+            first = p;
+        } else {
+            renderWall(p, last);
+        }
+        last = p;
+    });
+    renderWall(first, last);
+}
+
+function renderWall(p1, p2) {
+    context.save();
+    context.translate(canvas.width / 2, canvas.height / 2);
+    context.beginPath();
+    context.moveTo(fixCoord(p1[0]) - fixCoord(Me.x), fixCoord(p1[1]) - fixCoord(Me.y));
+    context.lineTo(fixCoord(p2[0]) - fixCoord(Me.x), fixCoord(p2[1]) - fixCoord(Me.y));
+    context.lineTo((fixCoord(p2[0]) - fixCoord(Me.x)) * 40, (fixCoord(p2[1]) - fixCoord(Me.y)) * 40);
+    context.lineTo((fixCoord(p1[0]) - fixCoord(Me.x)) * 40, (fixCoord(p1[1]) - fixCoord(Me.y)) * 40);
+    context.fill();
+    context.restore();
+}
+
+function blockVision() {
+    context.save();
+    context.translate(canvas.width / 2, canvas.height / 2);
+    context.rotate(60 * Math.PI / 180 + Me.dir);
+    context.fillRect(-2000, 0, 4000, 2000);
+    context.restore();
+
+    context.save();
+    context.translate(canvas.width / 2, canvas.height / 2);
+    context.rotate(-60 * Math.PI / 180 + Me.dir);
+    context.fillRect(-2000, 0, 4000, 2000);
     context.restore();
 }
 

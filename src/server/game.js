@@ -1,6 +1,7 @@
 const Constants = require('../shared/constants.js');
 const Player = require('./player.js');
 const Bullet = require('./bullet.js');
+const Map = require('./map.js');
 const applyBulletCollisions = require('./collisions');
 
 class Game {
@@ -9,11 +10,12 @@ class Game {
         this.bullets = [];
         this.lastUpdateTime = Date.now();
         this.shouldSendUpdate = false;
+        this.map = new Map();
         setInterval(this.update.bind(this), 1000 / Constants.UPDATE_RATE);
     }
 
     addPlayer(socket, username) {
-        this.players[socket.id] = new Player(socket.id, socket, username, Math.random() * 500, Math.random() * 500, 0);
+        this.players[socket.id] = new Player(socket.id, socket, username, 0, 0, 0);
     }
 
     removePlayer(socket) {
@@ -28,8 +30,7 @@ class Game {
         const { dir, x, y } = inputs;
         if (this.players[socket.id]) {
             this.players[socket.id].setDirection(dir);
-            this.players[socket.id].updateX(x);
-            this.players[socket.id].updateY(y);
+            this.players[socket.id].move(x, y);
         }
     }
 
@@ -40,7 +41,7 @@ class Game {
         
         const removeBullets = [];
         this.bullets.forEach(bullet => {
-            if (bullet.update(dt)){
+            if (bullet.update(dt, this.map.getSurroundings(bullet.x, bullet.y))){
                 removeBullets.push(bullet);
             }
         });
@@ -73,6 +74,7 @@ class Game {
             me: player.serializeForUpdate(),
             others: nearbyPlayers.map(p => p.serializeForUpdate()),
             bullets: nearbyBullets.map(b => b.serializeForUpdate()),
+            blocks: this.map.getSurroundings(player.x, player.y)
         };
     }
 }
