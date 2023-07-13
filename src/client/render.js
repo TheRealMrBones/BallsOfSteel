@@ -20,7 +20,7 @@ function render() {
         animationFrameRequestId = requestAnimationFrame(render);
         return;
     }
-    const { me, others, bullets, blocks } = getCurrentState();
+    const { me, others, bullets, walls } = getCurrentState();
 
     if (me) {
         Me = me;
@@ -28,7 +28,7 @@ function render() {
         bullets.forEach(renderBullet.bind(null, me));
         others.forEach(renderPlayer.bind(null, me));
         blockVision();
-        blocks.forEach(b => { renderBlock(b); });
+        walls.forEach(w => { renderWall(w[0], w[1]); });
         renderPlayer(me, me);
     }
 
@@ -82,20 +82,6 @@ function renderBullet(me, bullet){
         canvas.height / BULLET_SCALE,
     );
     context.restore();
-}
-
-function renderBlock(block) {
-    let first;
-    let last;
-    block.forEach(p => {
-        if (first == null) {
-            first = p;
-        } else {
-            renderWall(p, last);
-        }
-        last = p;
-    });
-    renderWall(first, last);
 }
 
 function renderWall(p1, p2) {

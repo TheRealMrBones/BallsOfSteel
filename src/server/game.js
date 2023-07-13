@@ -84,7 +84,7 @@ class Game {
             me: player.serializeForUpdate(),
             others: nearbyPlayers.map(p => p.serializeForUpdate()),
             bullets: nearbyBullets.map(b => b.serializeForUpdate()),
-            blocks: this.map.getSurroundings(player.x, player.y)
+            walls: this.map.getSurroundings(player.x, player.y)
         };
     }
 }

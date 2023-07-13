@@ -33,7 +33,7 @@ function getBaseUpdate() {
     const serverTime = currentServerTime();
     for (let i = gameUpdates.length - 1; i >= 0; i--) {
         if (gameUpdates[i].t <= serverTime) {
-        return i;
+            return i;
         }
     }
     return -1;
@@ -56,10 +56,10 @@ export function getCurrentState() {
         const next = gameUpdates[base + 1];
         const ratio = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
         return {
-        me: interpolateObject(baseUpdate.me, next.me, ratio),
-        others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
-        bullets: interpolateObjectArray(baseUpdate.bullets, next.bullets, ratio),
-        blocks: baseUpdate.blocks
+            me: interpolateObject(baseUpdate.me, next.me, ratio),
+            others: interpolateObjectArray(baseUpdate.others, next.others, ratio),
+            bullets: interpolateObjectArray(baseUpdate.bullets, next.bullets, ratio),
+            walls: baseUpdate.walls
         };
     }
 }
@@ -72,9 +72,9 @@ function interpolateObject(object1, object2, ratio) {
     const interpolated = {};
     Object.keys(object1).forEach(key => {
         if (key === 'dir') {
-        interpolated[key] = interpolateDirection(object1[key], object2[key], ratio);
+            interpolated[key] = interpolateDirection(object1[key], object2[key], ratio);
         } else {
-        interpolated[key] = object1[key] + (object2[key] - object1[key]) * ratio;
+            interpolated[key] = object1[key] + (object2[key] - object1[key]) * ratio;
         }
     });
     return interpolated;

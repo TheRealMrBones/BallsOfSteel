@@ -11,12 +11,12 @@ class Bullet extends ObjectClass {
         this.dy = 0;
     }
 
-    update(dt, blocks){
+    update(dt, walls){
         this.dx = Math.cos(this.dir - Math.PI / 2) * dt * Constants.BULLET_SPEED;
         this.dy = Math.sin(this.dir - Math.PI / 2) * dt * Constants.BULLET_SPEED;
         let hit = false;
-        blocks.forEach(b => { 
-            if(this.hitBlock(b)){
+        walls.forEach(w => { 
+            if(this.hitWall(w[0], w[1])){
                 hit = true;
             }
         })
@@ -26,26 +26,6 @@ class Bullet extends ObjectClass {
         super.updateX(this.dx);
         super.updateY(this.dy);
         return Date.now() - this.bday > Constants.BULLET_TTL;
-    }
-
-    hitBlock(block) {
-        let first;
-        let last;
-        let hit = false;
-        block.forEach(p => {
-            if (first == null) {
-                first = p;
-            } else {
-                if(this.hitWall(p, last)){
-                    hit = true;
-                }
-            }
-            last = p;
-        });
-        if(hit){
-            return true;
-        }
-        return this.hitWall(first, last);
     }
     
     hitWall(p1, q1){

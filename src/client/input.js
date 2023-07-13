@@ -102,29 +102,15 @@ function handleInput(){
         startd = Date.now();
     }
 
-    const { blocks } = getCurrentState();
+    const { walls } = getCurrentState();
     // stop at wall
-    blocks.forEach(b => { WalkIntoBlock(b); });x
+    walls.forEach(w => { WalkIntoWall(w[0], w[1]); });
 
     updateInputs({
         dir: dir,
         x: x,
         y: y,
     });
-}
-
-function WalkIntoBlock(block) {
-    let first;
-    let last;
-    block.forEach(p => {
-        if (first == null) {
-            first = p;
-        } else {
-            WalkIntoWall(p, last);
-        }
-        last = p;
-    });
-    WalkIntoWall(first, last);
 }
 
 function WalkIntoWall(p1, p2) {
