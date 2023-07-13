@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
 import { processGameUpdate } from './state.js';
 import { throttle } from 'throttle-debounce';
+import { startRendering } from './render.js';
+import { startCapturingInput } from './input.js';
 
 const Constants = require('../shared/constants.js');
 const socketProtocol = (window.location.protocol.includes('https')) ? 'wss' : 'ws';
@@ -16,8 +18,14 @@ export const connect = onGameOver => (
     connectedPromise.then(() => {
         socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
         socket.on(Constants.MSG_TYPES.DEAD, onGameOver);
+        socket.on(Constants.MSG_TYPES.PLAYER_INSTANTIATED, onInstantiated)
     })
 );
+
+function onInstantiated(pos){
+    startCapturingInput(pos.x, pos.y);
+    startRendering();
+}
 
 export const play = username => {
     socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);

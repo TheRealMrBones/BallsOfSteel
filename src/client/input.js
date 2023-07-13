@@ -176,7 +176,10 @@ function getSlope(p1, p2) {
     }
 }
 
-export function startCapturingInput() {
+export function startCapturingInput(xp, yp) {
+    x = xp;
+    y = yp;
+
     window.addEventListener('mousemove', onMouseInput);
     window.addEventListener('click', onMouseInput);
     window.addEventListener('touchstart', onTouchInput);

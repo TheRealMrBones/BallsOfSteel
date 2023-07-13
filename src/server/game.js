@@ -15,7 +15,13 @@ class Game {
     }
 
     addPlayer(socket, username) {
-        this.players[socket.id] = new Player(socket.id, socket, username, 0, 0, 0);
+        let spawn = this.map.getSpawn();
+        this.players[socket.id] = new Player(socket.id, socket, username, spawn[0], spawn[1], 0);
+        this.players[socket.id].socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(this.players[socket.id]));
+        socket.emit(Constants.MSG_TYPES.PLAYER_INSTANTIATED, {
+            x: spawn[0],
+            y: spawn[1]
+        });
     }
 
     removePlayer(socket) {
@@ -23,14 +29,18 @@ class Game {
     }
 
     shoot(socket){
-        this.bullets.push(new Bullet(socket.id, this.players[socket.id].x, this.players[socket.id].y, this.players[socket.id].dir));
+        if(this.players[socket.id] !== undefined){
+            this.bullets.push(new Bullet(socket.id, this.players[socket.id].x, this.players[socket.id].y, this.players[socket.id].dir));
+        }
     }
 
     handleInput(socket, inputs) {
-        const { dir, x, y } = inputs;
-        if (this.players[socket.id]) {
-            this.players[socket.id].setDirection(dir);
-            this.players[socket.id].move(x, y);
+        if(this.players[socket.id] !== undefined){
+            const { dir, x, y } = inputs;
+            if (this.players[socket.id]) {
+                this.players[socket.id].setDirection(dir);
+                this.players[socket.id].move(x, y);
+            }
         }
     }
 

@@ -35,6 +35,17 @@ class Map{
         this.blocks.push([[2600, 100], [2800, 100], [2800, 300], [2600, 300]]);
         this.blocks.push([[3000, 100], [3100, 100], [3100, 500], [3000, 500]]);
         this.blocks.push([[2400, 500], [3200, 500], [3200, 600], [2400, 600]]);
+
+        this.spawnpoints = [];
+        this.spawnpoints.push([0, 0]);
+        this.spawnpoints.push([3100, 1900]);
+        this.spawnpoints.push([-3100, 1900]);
+        this.spawnpoints.push([3100, -1900]);
+        this.spawnpoints.push([-3100, -1900]);
+    }
+
+    getSpawn(){
+        return this.spawnpoints[Math.floor(Math.random() * 5)];
     }
 
     getSurroundings(x, y){

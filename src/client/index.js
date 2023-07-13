@@ -1,6 +1,6 @@
 import { connect, play } from './networking.js';
-import { startRendering, stopRendering } from './render.js';
-import { startCapturingInput, stopCapturingInput } from './input.js';
+import { stopRendering } from './render.js';
+import { stopCapturingInput } from './input.js';
 import { downloadAssets } from './assets.js';
 import { initState } from './state.js';
 
@@ -19,8 +19,6 @@ Promise.all([
         play(usernameInput.value);
         startMenu.style.display = "none";
         initState();
-        startCapturingInput();
-        startRendering();
     };
 }).catch(console.error);
 
