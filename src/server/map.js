@@ -1,3 +1,5 @@
+const Constants = require('../shared/constants.js');
+
 class Map{
     constructor(){
         // defaults
@@ -56,7 +58,7 @@ class Map{
         return this.spawnpoints[Math.floor(Math.random() * 5)];
     }
 
-    getSurroundings(x, y){
+    getMap(x, y){
         return this.walls;
     }
 }

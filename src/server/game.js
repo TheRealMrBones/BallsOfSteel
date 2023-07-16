@@ -20,7 +20,8 @@ class Game {
         this.players[socket.id].socket.emit(Constants.MSG_TYPES.GAME_UPDATE, this.createUpdate(this.players[socket.id]));
         socket.emit(Constants.MSG_TYPES.PLAYER_INSTANTIATED, {
             x: spawn[0],
-            y: spawn[1]
+            y: spawn[1],
+            walls: this.map.getMap(this.players[socket.id].x, this.players[socket.id].y)
         });
     }
 
@@ -51,7 +52,7 @@ class Game {
         
         const removeBullets = [];
         this.bullets.forEach(bullet => {
-            if (bullet.update(dt, this.map.getSurroundings(bullet.x, bullet.y))){
+            if (bullet.update(dt, this.map.getMap(bullet.x, bullet.y))){
                 removeBullets.push(bullet);
             }
         });
@@ -83,8 +84,7 @@ class Game {
             t: Date.now(),
             me: player.serializeForUpdate(),
             others: nearbyPlayers.map(p => p.serializeForUpdate()),
-            bullets: nearbyBullets.map(b => b.serializeForUpdate()),
-            walls: this.map.getSurroundings(player.x, player.y)
+            bullets: nearbyBullets.map(b => b.serializeForUpdate())
         };
     }
 }

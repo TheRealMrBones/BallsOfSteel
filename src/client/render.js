@@ -1,5 +1,6 @@
 import { getAsset } from './assets.js';
 import { getCurrentState } from './state.js';
+import { getMap } from './map.js';
 
 const Constants = require('../shared/constants.js');
 const { NATIVE_RESOLUTION, PLAYER_SCALE, BULLET_SCALE } = Constants;
@@ -20,7 +21,8 @@ function render() {
         animationFrameRequestId = requestAnimationFrame(render);
         return;
     }
-    const { me, others, bullets, walls } = getCurrentState();
+    const { me, others, bullets } = getCurrentState();
+    let walls = getMap();
 
     if (me) {
         Me = me;

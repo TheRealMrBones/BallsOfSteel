@@ -3,6 +3,7 @@ import { processGameUpdate } from './state.js';
 import { throttle } from 'throttle-debounce';
 import { startRendering } from './render.js';
 import { startCapturingInput } from './input.js';
+import { setMap } from './map.js';
 
 const Constants = require('../shared/constants.js');
 const socketProtocol = (window.location.protocol.includes('https')) ? 'wss' : 'ws';
@@ -22,9 +23,10 @@ export const connect = onGameOver => (
     })
 );
 
-function onInstantiated(pos){
-    startCapturingInput(pos.x, pos.y);
+function onInstantiated(stuff){
+    startCapturingInput(stuff.x, stuff.y);
     startRendering();
+    setMap(stuff.walls);
 }
 
 export const play = username => {

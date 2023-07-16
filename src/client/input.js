@@ -1,5 +1,5 @@
 import { updateInputs, shoot } from './networking.js';
-import { getCurrentState } from './state.js';
+import { getMap } from './map.js';
 
 const Constants = require('../shared/constants.js');
 const canvas = document.getElementById('gamecanvas');
@@ -102,7 +102,7 @@ function handleInput(){
         startd = Date.now();
     }
 
-    const { walls } = getCurrentState();
+    let walls = getMap();
     // stop at wall
     walls.forEach(w => { WalkIntoWall(w[0], w[1]); });
 
