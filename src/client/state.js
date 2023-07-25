@@ -1,3 +1,5 @@
+import { updateLeaderboard } from './ui.js';
+
 const RENDER_DELAY = 100;
 
 const gameUpdates = [];
@@ -10,6 +12,8 @@ export function initState() {
 }
 
 export function processGameUpdate(update) {
+    updateLeaderboard(update.leaderboard);
+
     if (!firstServerTimestamp) {
         firstServerTimestamp = update.t;
         gameStart = Date.now();

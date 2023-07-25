@@ -9,6 +9,7 @@ class Bullet extends ObjectClass {
         this.bday = Date.now();
         this.dx = 0;
         this.dy = 0;
+        this.killed = "";
     }
 
     update(dt, walls){

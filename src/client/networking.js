@@ -4,6 +4,9 @@ import { throttle } from 'throttle-debounce';
 import { startRendering } from './render.js';
 import { startCapturingInput } from './input.js';
 import { setMap } from './map.js';
+import { displayKill } from './ui.js';
+
+const leaderboard = document.getElementById('leaderboard');
 
 const Constants = require('../shared/constants.js');
 const socketProtocol = (window.location.protocol.includes('https')) ? 'wss' : 'ws';
@@ -19,11 +22,13 @@ export const connect = onGameOver => (
     connectedPromise.then(() => {
         socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
         socket.on(Constants.MSG_TYPES.DEAD, onGameOver);
-        socket.on(Constants.MSG_TYPES.PLAYER_INSTANTIATED, onInstantiated)
+        socket.on(Constants.MSG_TYPES.PLAYER_INSTANTIATED, onInstantiated);
+        socket.on(Constants.MSG_TYPES.KILL, displayKill);
     })
 );
 
 function onInstantiated(stuff){
+    leaderboard.style.display = "block";
     startCapturingInput(stuff.x, stuff.y);
     startRendering();
     setMap(stuff.walls);

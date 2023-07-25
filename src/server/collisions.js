@@ -10,6 +10,7 @@ function applyBulletCollisions(players, bullets) {
                 bullet.pid !== player.id &&
                 player.distanceTo(bullet) <= (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE + Constants.NATIVE_RESOLUTION / Constants.BULLET_SCALE) / 2
             ) {
+                bullet.killed = player.username;
                 removeBullets.push(bullet);
                 player.dead = true;
                 break;

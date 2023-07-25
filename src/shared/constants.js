@@ -1,7 +1,7 @@
 module.exports = Object.freeze({
     PLAYER_SCALE: 17,
     PLAYER_SPEED: 400,
-    PLAYER_FIRE_COOLDOWN: 0.25,
+    PLAYER_FIRE_COOLDOWN: 1,
 
     BULLET_SCALE: 59,
     BULLET_SPEED: 2000,
@@ -19,5 +19,6 @@ module.exports = Object.freeze({
         INPUT: 'input',
         SHOOT: 'shoot',
         DEAD: 'dead',
+        KILL: 'kill',
     },
 });

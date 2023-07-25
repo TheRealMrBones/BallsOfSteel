@@ -15,12 +15,22 @@ Promise.all([
     downloadAssets(),
 ]).then(() => {
     usernameInput.focus();
+    usernameInput.addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.key === "Enter") {
+            init();
+        }
+    });
     playButton.onclick = () => {
-        play(usernameInput.value);
-        startMenu.style.display = "none";
-        initState();
+        init();
     };
 }).catch(console.error);
+
+function init(){
+    play(usernameInput.value);
+    startMenu.style.display = "none";
+    initState();
+}
 
 function onGameOver() {
     stopCapturingInput();

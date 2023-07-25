@@ -7,6 +7,7 @@ class Player extends ObjectClass {
         this.username = username;
         this.dead = false;
         this.kills = 0;
+        this.lastshot = Date.now();
     }
 
     move(x, y){
