@@ -6,6 +6,7 @@ class Player extends ObjectClass {
         this.socket = socket;
         this.username = username;
         this.dead = false;
+        this.kills = 0;
     }
 
     move(x, y){

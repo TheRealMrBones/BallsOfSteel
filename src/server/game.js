@@ -51,12 +51,18 @@ class Game {
         this.lastUpdateTime = now;
         
         const removeBullets = [];
+
+        removeBullets.push(...applyBulletCollisions(Object.values(this.players), this.bullets));
+        removeBullets.forEach(b => {
+            this.players[b.pid].kills++;
+        });
+
         this.bullets.forEach(bullet => {
             if (bullet.update(dt, this.map.getMap(bullet.x, bullet.y))){
                 removeBullets.push(bullet);
             }
         });
-        removeBullets.push(...applyBulletCollisions(Object.values(this.players), this.bullets));
+        
         this.bullets = this.bullets.filter(b => !removeBullets.includes(b));
 
         Object.values(this.players).forEach(p => {

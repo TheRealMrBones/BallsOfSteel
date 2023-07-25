@@ -5,6 +5,7 @@ class Map{
         // defaults
         this.spawnpoints = [[0, 0]];
         this.walls = [];
+        this.wallBoxes = [];
         this.loadmap();
     }
 
@@ -16,6 +17,7 @@ class Map{
             [3100, -1900],
             [-3100, -1900]
         ]
+
         this.walls = [
             [[200, 2000], [3300, 2000]], [[3300, 2000], [3300, 2100]], [[3300, 2100], [200, 2100]], [[200, 2100], [200, 2000]],
             [[-200, 2000], [-3300, 2000]], [[-3300, 2000], [-3300, 2100]], [[-3300, 2100], [-200, 2100]], [[-200, 2100], [-200, 2000]],
@@ -52,6 +54,15 @@ class Map{
             [[3000, 100], [3100, 100]], [[3100, 100], [3100, 500]], [[3100, 500], [3000, 500]], [[3000, 500], [3000, 100]],
             [[2400, 500], [3200, 500]], [[3200, 500], [3200, 600]], [[3200, 600], [2400, 600]], [[2400, 600], [2400, 500]],
         ]
+
+        this.loadWallBoxes();
+    }
+
+    loadWallBoxes(){
+        // xmin ymin xmax ymax
+        this.walls.forEach(w => {
+            this.wallBoxes.push([Math.min(w[0][0], w[1][0]), Math.min(w[0][1], w[1][1]), Math.max(w[0][0], w[1][0]), Math.max(w[0][1], w[1][1])]);
+        });
     }
 
     getSpawn(){
@@ -60,6 +71,10 @@ class Map{
 
     getMap(x, y){
         return this.walls;
+    }
+
+    getWallBoxes(x, y, dir){
+        return this.wallBoxes;
     }
 }
 

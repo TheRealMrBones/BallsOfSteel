@@ -2,7 +2,6 @@ import { updateInputs, shoot } from './networking.js';
 import { getMap } from './map.js';
 
 const Constants = require('../shared/constants.js');
-const canvas = document.getElementById('gamecanvas');
 
 let dir = 0;
 let x = 0;
@@ -115,37 +114,37 @@ function handleInput(){
 
 function WalkIntoWall(p1, p2) {
     let pdist = Math.sqrt((x - p1[0]) * (x - p1[0]) + (y - p1[1]) * (y - p1[1]));
-    if (pdist <= canvas.height / Constants.PLAYER_SCALE / 2) {
+    if (pdist <= Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2) {
         let xr = Math.abs(x - p1[0]) / pdist;
         let yr = Math.abs(y - p1[1]) / pdist;
         if (x > p1[0]) {
-            x += xr * (canvas.height / Constants.PLAYER_SCALE / 2 - pdist);
+            x += xr * (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - pdist);
         } else {
-            x -= xr * (canvas.height / Constants.PLAYER_SCALE / 2 - pdist);
+            x -= xr * (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - pdist);
         }
         if (y > p1[1]) {
-            y += yr * (canvas.height / Constants.PLAYER_SCALE / 2 - pdist);
+            y += yr * (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - pdist);
         } else {
-            y -= yr * (canvas.height / Constants.PLAYER_SCALE / 2 - pdist);
+            y -= yr * (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - pdist);
         }
     }
     if (p1[0] - p2[0] == 0) {
         if (y > p1[1] && y < p2[1] || y < p1[1] && y > p2[1]) {
-            if (Math.abs(x - p1[0]) <= canvas.height / Constants.PLAYER_SCALE / 2) {
+            if (Math.abs(x - p1[0]) <= Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2) {
                 if (x - p1[0] > 0) {
-                    x += (canvas.height / Constants.PLAYER_SCALE / 2 - Math.abs(x - p1[0]))
+                    x += (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - Math.abs(x - p1[0]))
                 } else {
-                    x -= (canvas.height / Constants.PLAYER_SCALE / 2 - Math.abs(x - p1[0]))
+                    x -= (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - Math.abs(x - p1[0]))
                 }
             }
         }
     } else if (p1[1] - p2[1] == 0) {
         if (x > p1[0] && x < p2[0] || x < p1[0] && x > p2[0]) {
-            if (Math.abs(y - p1[1]) <= canvas.height / Constants.PLAYER_SCALE / 2) {
+            if (Math.abs(y - p1[1]) <= Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2) {
                 if (y - p1[1] > 0) {
-                    y += (canvas.height / Constants.PLAYER_SCALE / 2 - Math.abs(y - p1[1]))
+                    y += (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - Math.abs(y - p1[1]))
                 } else {
-                    y -= (canvas.height / Constants.PLAYER_SCALE / 2 - Math.abs(y - p1[1]))
+                    y -= (Constants.NATIVE_RESOLUTION / Constants.PLAYER_SCALE / 2 - Math.abs(y - p1[1]))
                 }
             }
         }
