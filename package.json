@@ -1,6 +1,6 @@
 {
     "name": "ballsofsteel",
-    "version": "0.0.1",
+    "version": "1.0.3",
     "description": "funny ball game",
     "private": true,
     "main": "src/server/server.js",

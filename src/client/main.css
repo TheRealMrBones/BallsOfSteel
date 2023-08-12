@@ -19,6 +19,8 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: dimgray;
+    padding: 20px;
+    border-radius: 25px;
 }
 
 #kill{
@@ -39,9 +41,11 @@ body{
     top: 20px;
     right: 20px;
     background-color: gray;
-    opacity: .5;
+    opacity: .8;
     pointer-events: none;
     user-select: none;
     font-weight: bold;
     display: none;
+    padding: 20px;
+    border-radius: 25px;
 }

@@ -1,5 +1,6 @@
 import { updateInputs, shoot } from './networking.js';
 import { getMap } from './map.js';
+import { getCurrentState } from './state.js';
 
 const Constants = require('../shared/constants.js');
 
@@ -27,21 +28,25 @@ function handleDirection(x, y) {
 
 function handlekeyDown(e){
     switch(e.key){
+        case 'ArrowUp':
         case 'w':
             if(startw == null){
                 startw = Date.now();
             }
             break;
+        case 'ArrowDown':
         case 's':
             if(starts == null){
                 starts = Date.now();
             }
             break;
+        case 'ArrowLeft':
         case 'a':
             if(starta == null){
                 starta = Date.now();
             }
             break;
+        case 'ArrowRight':
         case 'd':
             if(startd == null){
                 startd = Date.now();
@@ -52,24 +57,28 @@ function handlekeyDown(e){
 
 function handlekeyUp(e){
     switch(e.key){
+        case 'ArrowUp':
         case 'w':
             if(startw != null){
                 y -= (Date.now() - startw) * Constants.PLAYER_SPEED / 1000;
                 startw = null;
             }
             break;
+        case 'ArrowDown':
         case 's':
             if(starts != null){
                 y += (Date.now() - starts) * Constants.PLAYER_SPEED / 1000;
                 starts = null;
             }
             break;
+        case 'ArrowLeft':
         case 'a':
             if(starta != null){
                 x -= (Date.now() - starta) * Constants.PLAYER_SPEED / 1000;
                 starta = null;
             }
             break;
+        case 'ArrowRight':
         case 'd':
             if(startd != null){
                 x += (Date.now() - startd) * Constants.PLAYER_SPEED / 1000;
@@ -100,6 +109,8 @@ function handleInput(){
         x += (Date.now() - startd) * Constants.PLAYER_SPEED / 1000;
         startd = Date.now();
     }
+
+    const { others } = getCurrentState();
 
     let walls = getMap();
     // stop at wall
@@ -194,4 +205,13 @@ export function stopCapturingInput() {
     startd = null;
 
     clearInterval(interval)
+}
+
+export function fixPos(newpos){
+    x = newpos.newx;
+    y = newpos.newy;
+
+    let walls = getMap();
+    // check for phase
+    walls.forEach(w => { WalkIntoWall(w[0], w[1]); });
 }

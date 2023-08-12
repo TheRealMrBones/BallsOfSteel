@@ -2,7 +2,7 @@ const Constants = require('../shared/constants.js');
 const Player = require('./player.js');
 const Bullet = require('./bullet.js');
 const Map = require('./map.js');
-const applyBulletCollisions = require('./collisions');
+const {applyBulletCollisions, moveTouchingPlayers, phaseCheck} = require('./collisions.js');
 
 class Game {
     constructor() {
@@ -45,6 +45,7 @@ class Game {
             if (this.players[socket.id]) {
                 this.players[socket.id].setDirection(dir);
                 this.players[socket.id].move(x, y);
+                moveTouchingPlayers(this.players[socket.id], Object.values(this.players), this.map);
             }
         }
     }
@@ -53,22 +54,26 @@ class Game {
         const now = Date.now();
         const dt = (now - this.lastUpdateTime) / 1000;
         this.lastUpdateTime = now;
-        
-        const removeBullets = [];
 
-        removeBullets.push(...applyBulletCollisions(Object.values(this.players), this.bullets));
-        removeBullets.forEach(b => {
-            this.players[b.pid].kills++;
-            this.players[b.pid].socket.emit(Constants.MSG_TYPES.KILL, { killed: b.killed });
-        });
+        let removeBullets = [];
 
-        this.bullets.forEach(bullet => {
-            if (bullet.update(dt, this.map.getMap(bullet.x, bullet.y))){
-                removeBullets.push(bullet);
-            }
-        });
-        
-        this.bullets = this.bullets.filter(b => !removeBullets.includes(b));
+        for(let i = 0; i < 2; i++){
+            // repeat for higher bullet hit accuracy
+            removeBullets.push(...applyBulletCollisions(Object.values(this.players), this.bullets));
+            removeBullets.forEach(b => {
+                this.players[b.pid].kills++;
+                this.players[b.pid].socket.emit(Constants.MSG_TYPES.KILL, { killed: b.killed });
+            });
+
+            this.bullets.forEach(bullet => {
+                if (bullet.update(dt, this.map.getMap(bullet.x, bullet.y))){
+                    removeBullets.push(bullet);
+                }
+            });
+
+            this.bullets = this.bullets.filter(b => !removeBullets.includes(b));
+            removeBullets = [];
+        }
 
         Object.values(this.players).forEach(p => {
             if(p.dead){
@@ -77,7 +82,7 @@ class Game {
             }
         })
 
-        let sortedKillers = Object.values(this.players).sort((a, b) => a.kills + b.kills).map(function(p){
+        let sortedKillers = Object.values(this.players).sort((a, b) => b.kills - a.kills).map(function(p){
             return `${p.username} : ${p.kills}`;
         });
         for(let i = 0; i < 5; i++){

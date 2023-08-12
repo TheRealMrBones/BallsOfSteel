@@ -1,11 +1,11 @@
 module.exports = Object.freeze({
-    PLAYER_SCALE: 17,
+    PLAYER_SCALE: 19,
     PLAYER_SPEED: 400,
     PLAYER_FIRE_COOLDOWN: 1,
 
     BULLET_SCALE: 59,
     BULLET_SPEED: 2000,
-    BULLET_TTL: 2000,
+    BULLET_TTL: 1000,
 
     UPDATE_RATE: 50,
 
@@ -17,6 +17,7 @@ module.exports = Object.freeze({
         PLAYER_INSTANTIATED: 'instantiated',
         GAME_UPDATE: 'update',
         INPUT: 'input',
+        FIX_POS: 'fixpos',
         SHOOT: 'shoot',
         DEAD: 'dead',
         KILL: 'kill',

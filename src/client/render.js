@@ -100,14 +100,20 @@ function renderWall(p1, p2) {
 
 function blockVision() {
     context.save();
-    context.translate(canvas.width / 2, canvas.height / 2);
+    context.translate(canvas.width / 2 + Math.cos(60 * Math.PI / 90 + Me.dir) * 100 * canvas.height / NATIVE_RESOLUTION, canvas.height / 2 + Math.sin(60 * Math.PI / 90 + Me.dir) * 100 * canvas.height / NATIVE_RESOLUTION);
     context.rotate(60 * Math.PI / 180 + Me.dir);
     context.fillRect(-2000, 0, 4000, 2000);
     context.restore();
 
     context.save();
-    context.translate(canvas.width / 2, canvas.height / 2);
+    context.translate(canvas.width / 2 - Math.cos(-60 * Math.PI / 90 + Me.dir) * 100 * canvas.height / NATIVE_RESOLUTION, canvas.height / 2 - Math.sin(-60 * Math.PI / 90 + Me.dir) * 100 * canvas.height / NATIVE_RESOLUTION);
     context.rotate(-60 * Math.PI / 180 + Me.dir);
+    context.fillRect(-2000, 0, 4000, 2000);
+    context.restore();
+
+    context.save();
+    context.translate(canvas.width / 2 + Math.cos(Math.PI / 2 + Me.dir) * 70 * canvas.height / NATIVE_RESOLUTION, canvas.height / 2 + Math.sin(Math.PI / 2 + Me.dir) * 70 * canvas.height / NATIVE_RESOLUTION);
+    context.rotate(Me.dir);
     context.fillRect(-2000, 0, 4000, 2000);
     context.restore();
 }
