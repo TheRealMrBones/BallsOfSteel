@@ -10,7 +10,7 @@
         "devStart": "nodemon src/server/server.js"
     },
     "keywords": [],
-    "author": "Stalpo",
+    "author": "Mr Bones",
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.17.10",
